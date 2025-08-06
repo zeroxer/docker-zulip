@@ -1,7 +1,13 @@
+networks:
+  zulip-net:
+    driver: bridge
+
 services:
   database:
     image: "zulip/zulip-postgresql:14"
     restart: unless-stopped
+    networks:
+      - zulip-net
     environment:
       POSTGRES_DB: "zulip"
       POSTGRES_USER: "zulip"
@@ -14,6 +20,8 @@ services:
   memcached:
     image: "memcached:alpine"
     restart: unless-stopped
+    networks:
+      - zulip-net
     command:
       - "sh"
       - "-euc"
@@ -29,6 +37,8 @@ services:
   rabbitmq:
     image: "rabbitmq:4.0.7"
     restart: unless-stopped
+    networks:
+      - zulip-net
     environment:
       RABBITMQ_DEFAULT_USER: "zulip"
       RABBITMQ_DEFAULT_PASS: "REPLACE_WITH_SECURE_RABBITMQ_PASSWORD"
@@ -37,6 +47,8 @@ services:
   redis:
     image: "redis:alpine"
     restart: unless-stopped
+    networks:
+      - zulip-net
     command:
       - "sh"
       - "-euc"
@@ -50,6 +62,8 @@ services:
   zulip:
     image: "zulip/docker-zulip:10.4-0"
     restart: unless-stopped
+    networks:
+      - zulip-net
     build:
       context: .
       args:

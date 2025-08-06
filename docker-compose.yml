@@ -58,12 +58,6 @@ services:
         ZULIP_GIT_REF: "10.4"
         ## Set this up if you plan to use your own CA certificate bundle for building
         # CUSTOM_CA_CERTIFICATES:
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.zulip.rule=Host(`${ZULIP_HOST}`)"
-      - "traefik.http.routers.zulip.entrypoints=websecure"
-      - "traefik.http.routers.zulip.tls=true"
-      - "traefik.http.services.zulip.loadbalancer.server.port=80"
     environment:
       ## See https://github.com/zulip/docker-zulip#configuration for
       ## details on this section and how to discover the many

@@ -65,6 +65,7 @@ services:
       DB_HOST: "database"
       DB_HOST_PORT: "5432"
       DB_USER: "zulip"
+      DISABLE_HTTPS: true
       SSL_CERTIFICATE_GENERATION: "self-signed"
       SETTING_MEMCACHED_LOCATION: "memcached:11211"
       SETTING_RABBITMQ_HOST: "rabbitmq"
@@ -77,6 +78,7 @@ services:
       SECRETS_memcached_password: "REPLACE_WITH_SECURE_MEMCACHED_PASSWORD"
       SECRETS_redis_password: "REPLACE_WITH_SECURE_REDIS_PASSWORD"
       SECRETS_secret_key: "REPLACE_WITH_SECURE_SECRET_KEY"
+      SETTING_ALLOWED_HOSTS: '["${SETTING_EXTERNAL_HOST}"]'
       SETTING_EXTERNAL_HOST: ${SETTING_EXTERNAL_HOST}
       SETTING_ZULIP_ADMINISTRATOR: ${SETTING_ZULIP_ADMINISTRATOR}
       SETTING_EMAIL_HOST: "" # e.g. smtp.example.com
@@ -87,12 +89,12 @@ services:
       SETTING_EMAIL_USE_TLS: "True"
       ZULIP_AUTH_BACKENDS: "EmailAuthBackend"
       ## Uncomment this when configuring the mobile push notifications service
-      # SETTING_ZULIP_SERVICE_PUSH_NOTIFICATIONS: "True"
-      # SETTING_ZULIP_SERVICE_SUBMIT_USAGE_STATISTICS: "True"
+      SETTING_ZULIP_SERVICE_PUSH_NOTIFICATIONS: "True"
+      SETTING_ZULIP_SERVICE_SUBMIT_USAGE_STATISTICS: "True"
 
       ## If you're using a reverse proxy, you'll want to provide the
       ## comma-separated set of IP addresses to trust here.
-      # LOADBALANCER_IPS: ""
+      LOADBALANCER_IPS: "10.0.1.0/24"
 
       ## By default, files uploaded by users and profile pictures are
       ## stored directly on the Zulip server. You can configure files
@@ -111,10 +113,10 @@ services:
       # SETTING_S3_REGION: "None"
     volumes:
       - "zulip:/data:rw"
-    ulimits:
-      nofile:
-        soft: 1000000
-        hard: 1048576
+    # ulimits:
+    #  nofile:
+    #    soft: 1000000
+    #    hard: 1048576
 volumes:
   zulip:
   postgresql-14:

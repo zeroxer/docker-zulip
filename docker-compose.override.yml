@@ -1,0 +1,5 @@
+services:
+  zulip:
+    ports:
+      - "${ZULIP_HTTP_PORT:-8080}:80"
+      - "${ZULIP_HTTPS_PORT:-8443}:443"
